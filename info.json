@@ -1,0 +1,9 @@
+{
+    "author" : ["Skull132 (Skull132#1984)"],
+    "install_msg" : "Thank you for installing my various shenaniganry cogs. Hope you find something useful here.",
+    "name" : "SkulledCogs",
+    "short" : "skullcogs",
+    "requirements": [],
+    "description" : "Various cogs for utility and shenanigans.",
+    "tags" : ["Fun", "Utility"]
+}

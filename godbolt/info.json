@@ -1,0 +1,9 @@
+{
+    "author" : ["Skull132 (Skull132#1984)"],
+    "install_msg" : "This should just work.",
+    "name" : "Godbolt",
+    "short" : "Allows you to use Godbolt from Discord.",
+    "description" : "Provides Discord access to the Godbolt Compiler Explorer, allowing you to both see the disassembly of provided code and to execute it. Commands are throttled for the sake of reasonability.s",
+    "permissions": [],
+    "tags" : ["Utility"]
+}
