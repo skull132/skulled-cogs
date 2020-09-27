@@ -107,15 +107,17 @@ class GodBolt(commands.Cog):
         start_idx: int = raw.find("```")
         
         if start_idx < 0:
-            raise ValueError("Invalid source code format given. Please encode the source code in code blocks.")
+            raise ValueError("Invalid source code format given. Cannot locate code block start.")
 
         start_idx += 3
         end_idx: int = raw.find("```", start_idx)
 
         if end_idx < 0:
-            raise ValueError("Invalid source code format given. Please encode the source code in code blocks.")
+            raise ValueError("Invalid source code format given. Cannot locate code block end.")
 
-        args: str = raw[0:start_idx] or ""
+        args: str = raw[0:start_idx - 3] or ""
+        args = args.strip()
+
         raw = raw[start_idx:end_idx]
         
         match: Optional[re.Match] = re.match(r"\w+", raw)
@@ -137,16 +139,16 @@ class GodBolt(commands.Cog):
         return f"```\n{content[:limit]}```"
 
     @godbolt.command(name="run")
-    async def godbolt_run(self, ctx: commands.Context, compiler: str, comp_args: str, *, raw) -> None:
+    async def godbolt_run(self, ctx: commands.Context, compiler: str, *, raw) -> None:
         """
         Executes the given input with the specified compiler. The code must be placed inside of code
         blocks. Use the "compilers" command to determine which compilers are used for which languages.
 
         For example, this will compile the code with GCC 8.2 with C++ (using flags O3 and Wall):
-        !godbolt run c++ g82 -O3 -Wall ```c++
+        !godbolt run g82 -O3 -Wall \\`\\`\\`c++
         #include <stdio.h>
         int main() { printf("hi"); }
-        ```
+        \\`\\`\\`
         """
         try:
             lang, args, source = self._unpack_raw(raw)
@@ -185,11 +187,11 @@ class GodBolt(commands.Cog):
         blocks. Use the "compilers" command to determine which compilers are used for which languages.
 
         For example, this will compile the code with GCC 8.2 with C++ (using flags O3 and Wall):
-        !godbolt asm c++ g82 -O3 -Wall ```c++
+        !godbolt asm g82 -O3 -Wall \\`\\`\\`c++
         double square(int num) {
             return num * num;
         }
-        ```
+        \\`\\`\\`
         """
         try:
             lang, args, source = self._unpack_raw(raw)
